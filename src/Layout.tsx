@@ -1,7 +1,7 @@
 import {
-    BrowserRouter,
+    HashRouter,
     Routes,
-    Route, Outlet, Navigate,
+    Route, Navigate,
 } from "react-router-dom";
 import BasicLayout from "./components/BasicLayout";
 import LoginForm from "./components/LoginForm";
@@ -11,7 +11,7 @@ import ReservationList from "./components/ReservationList";
 import ReservationDetail from "./components/ReservationDetail";
 
 const Layout = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Routes>
           <Route index element={<Navigate to='reservations'/>} />
             <Route path="login" element={<LoginForm/>}/>
@@ -20,10 +20,9 @@ const Layout = () => {
                 <Route path="createEmployee" element={<CreateEmployee/>}/>
                 <Route path="reservations" element={<ReservationList />}>
                     <Route path=":id" element={<ReservationDetail />} />
-                    <Route path="add" element={<div>add</div>} />
                 </Route>
             </Route>
         </Routes>
-    </BrowserRouter>
+    </HashRouter>
 }
 export default  Layout

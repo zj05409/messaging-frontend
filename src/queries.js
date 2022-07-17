@@ -7,7 +7,7 @@ export const CURRENT_USER = gql`
       token
       expiration
       username
-      emailØ
+      email
       roles
     }
   }
