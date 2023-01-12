@@ -1,7 +1,7 @@
-import RegisterForm from "./RegisterForm";
+import RegisterForm from './RegisterForm';
 
-const CreateEmployee = () => {
-    return <RegisterForm role={'Employee'} />
+function CreateEmployee() {
+  return <RegisterForm roleName="Employee" />;
 }
 
-export default  CreateEmployee
+export default CreateEmployee;

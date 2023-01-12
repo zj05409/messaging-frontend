@@ -1,10 +1,13 @@
-import {Button, DatePicker, Form, Input, InputNumber, List, message, Radio} from "antd";
-import {CREATE_RESERVATION, FIND_RESERVATION, UPDATE_RESERVATION} from "../queries";
-import {useMutation, useQuery} from "@apollo/client";
-import {useNavigate, useParams} from "react-router-dom";
-import styled from "styled-components";
-import {useEffect} from "react";
-import moment from "moment";
+/* eslint-disable react/jsx-props-no-spreading */
+import {
+  Button, DatePicker, Form, Input, InputNumber, message, Radio,
+} from 'antd';
+import { useMutation, useQuery } from '@apollo/client';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { useEffect } from 'react';
+import moment from 'moment';
+import { CREATE_RESERVATION, FIND_RESERVATION, UPDATE_RESERVATION } from '../queries';
 
 const Ctn = styled.div`
   position: fixed;
@@ -13,7 +16,7 @@ const Ctn = styled.div`
   left: 0;
   right: 0;
   background-color: white;
-`
+`;
 const formItemLayout = {
   labelCol: {
     xs: { span: 4 },
@@ -37,61 +40,58 @@ const tailFormItemLayout = {
   },
 };
 
-const ReservationDetail = () => {
-    const {id:_originalId} = useParams()
-    const id = _originalId === 'new' ? null : _originalId;
-    const result = useQuery(FIND_RESERVATION, {
-      fetchPolicy: "no-cache",
-      variables: { idToSearch: id },
-      skip: !id,
-    })
-  const [register, saveResult] = useMutation( id ? UPDATE_RESERVATION : CREATE_RESERVATION, {
+function ReservationDetail() {
+  const { id: _originalId } = useParams();
+  const id = _originalId === 'new' ? null : _originalId;
+  const result = useQuery(FIND_RESERVATION, {
+    fetchPolicy: 'no-cache',
+    variables: { idToSearch: id },
+    skip: !id,
+  });
+  const [register, saveResult] = useMutation(id ? UPDATE_RESERVATION : CREATE_RESERVATION, {
     onError: (error) => {
-      message.error(error.graphQLErrors[0]?.message || 'net Error')
+      message.error(error.graphQLErrors[0]?.message || 'net Error');
     },
-  })
+  });
 
-  const navigate =  useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (saveResult.data) {
-     message.success('success')
-      navigate('../')
+      message.success('success');
+      navigate('../');
     }
-
   }, [saveResult.data]) // eslint-disable-line
 
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    if(!values.expectedArriveTime) {
-      message.error('Please select the expected arrive time!')
+    // console.log('Received values of form: ', values);
+    if (!values.expectedArriveTime) {
+      message.error('Please select the expected arrive time!');
       return;
     }
-    values._id = id;
-    register({ variables: { reservation: values} })
-
+    register({ variables: { reservation: { ...values, _id: id } } });
   };
 
-    if (result.loading) {
-        return <div>loading...</div>
-    }
-    return (
-      <Ctn>
+  if (result.loading) {
+    return <div>loading...</div>;
+  }
+  return (
+    <Ctn>
       <Form
         {...formItemLayout}
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={((r)=>{
+        initialValues={((r) => {
           if (r) {
-            return {...r, expectedArriveTime: moment(r.expectedArriveTime, 'YYYY-MM-DDTHH:mm:ss.SSSZ')}
+            return { ...r, expectedArriveTime: moment(r.expectedArriveTime, 'YYYY-MM-DDTHH:mm:ss.SSSZ') };
           }
           return r;
         })(id ? result.data.getReservation : null)}
         scrollToFirstError
-        style={{width: '600px', margin: '100px auto'}}
+        style={{ width: '600px', margin: '100px auto' }}
       >
         <Form.Item
           name={['name']}
@@ -120,7 +120,7 @@ const ReservationDetail = () => {
             },
           ]}
         >
-          <Input type={'email'} />
+          <Input type="email" />
         </Form.Item>
 
         <Form.Item
@@ -134,16 +134,14 @@ const ReservationDetail = () => {
           ]}
           hasFeedback
         >
-          <Input type={'tel'} />
+          <Input type="tel" />
         </Form.Item>
 
         <Form.Item
           name="expectedArriveTime"
           label="expected arrive time"
           tooltip="What do you want expectedArriveTime?"
-          normalize={(value, prevValue, prevValues) => {
-            return value;
-          }}
+          normalize={(value) => value}
         >
           <DatePicker showTime format="YYYY-MM-DD HH:mm" />
         </Form.Item>
@@ -192,14 +190,13 @@ const ReservationDetail = () => {
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            {id? 'Update' : 'Create'}
+            {id ? 'Update' : 'Create'}
           </Button>
         </Form.Item>
       </Form>
-      </Ctn>
+    </Ctn>
 
-    )
+  );
 }
 
-
-export default ReservationDetail
+export default ReservationDetail;

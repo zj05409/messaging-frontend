@@ -1,8 +1,8 @@
-import Layout from "./Layout";
-import './App.css'
+import Layout from './Layout';
+import './App.css';
 
-const App = () => {
-    return <Layout></Layout>
+function App() {
+  return <Layout />;
 }
 
-export default App
+export default App;

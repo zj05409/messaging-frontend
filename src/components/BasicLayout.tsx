@@ -1,36 +1,37 @@
 import {
-    Outlet, useNavigate,
-} from "react-router-dom";
-import Logout from "./Logout";
-import {useEffect} from "react";
-import {Layout} from "antd";
+  Outlet, useNavigate,
+} from 'react-router-dom';
+import { useEffect } from 'react';
+import { Layout } from 'antd';
+import Logout from './Logout';
 
 const { Header, Content } = Layout;
 
-const BasicLayout = () => {
-    const navigate = useNavigate()
-    useEffect(() => {
-        const hasLogin = Boolean(localStorage.getItem('reservation-user-token'))
-        if (!hasLogin) {
-            navigate('/login', {replace: true})
-        }
-    }, [])
+function BasicLayout() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const hasLogin = Boolean(localStorage.getItem('reservation-user-token'));
+    if (!hasLogin) {
+      navigate('/login', { replace: true });
+    }
+  }, []);
 
-
-    return <Layout>
-      <Header style={{backgroundColor: 'lightgray'}}>
+  return (
+    <Layout style={{ height: '100vh' }}>
+      <Header style={{ backgroundColor: '#0C0D12' }}>
         <div style={{
-          display: "flex",
+          display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
-        }
-        }>
-          <div>reservation app</div>
-          <Logout/>
+          alignItems: 'center',
+          color: 'white',
+        }}
+        >
+          <div>Gradual Community</div>
+          <Logout />
         </div>
       </Header>
-      <Content style={{padding: '30px'}}><Outlet/></Content>
+      <Content style={{ padding: '0px', height: '100%' }}><Outlet /></Content>
     </Layout>
-
+  );
 }
-export default  BasicLayout
+export default BasicLayout;
