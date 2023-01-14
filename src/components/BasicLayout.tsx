@@ -1,8 +1,10 @@
 import {
+  Link,
   Outlet, useNavigate,
 } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
 import Logout from './Logout';
 
 const { Header, Content } = Layout;
@@ -26,7 +28,12 @@ function BasicLayout() {
           color: 'white',
         }}
         >
-          <div>Gradual Community</div>
+          <div>
+            <Link to="/chats">
+              <Button type="primary" shape="circle" icon={<HomeOutlined />} size="large" />
+            </Link>
+            &nbsp;&nbsp;&nbsp;&nbsp;Gradual Community
+          </div>
           <Logout />
         </div>
       </Header>

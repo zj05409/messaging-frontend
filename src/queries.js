@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const CURRENT_USER = gql`
-  query {
+  query currentUser{
     currentUserInfo {
       type
       token
@@ -48,12 +48,14 @@ export const NEW_MESSAGE = gql`
       referenceMessageId
       ats
       atIds
+      read
+      createdAt
     }
   }
 `;
 
 export const ALL_CHATS = gql`
-  query {
+  query allChats{
     chats:listAllChat {
       id
       chatType
@@ -91,6 +93,8 @@ export const FIND_MESSAGE = gql`
       referenceMessageId
       ats
       atIds
+      read
+      createdAt
     }
   }
 `;

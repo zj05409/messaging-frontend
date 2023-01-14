@@ -67,6 +67,7 @@ import reportWebVitals from './reportWebVitals';
   const client = new ApolloClient({
     cache,
     link: splitLink,
+    connectToDevTools: true,
   });
 
   root.render(
