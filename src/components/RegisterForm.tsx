@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { CREATE_EMPLOYEE, REGISTER } from '../queries';
+import { REGISTER } from '../queries';
 
 const Ctn = styled.div`
   margin: 100px auto;
@@ -39,7 +39,7 @@ const tailFormItemLayout = {
 };
 
 function RegisterForm({ roleName } : {roleName:string}) {
-  const [register, result] = useMutation(roleName === 'Employee' ? CREATE_EMPLOYEE : REGISTER, {
+  const [register, result] = useMutation(REGISTER, {
     onError: (error) => {
       message.error(error.graphQLErrors[0]?.message || 'net Error');
     },
@@ -49,9 +49,7 @@ function RegisterForm({ roleName } : {roleName:string}) {
 
   useEffect(() => {
     if (result.data) {
-      if (roleName === 'Employee') {
-        window.location.reload();
-      } else {
+      if (roleName === 'User') {
         navigate('/login');
       }
     }

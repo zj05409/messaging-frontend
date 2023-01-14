@@ -10,7 +10,7 @@ const { Header, Content } = Layout;
 function BasicLayout() {
   const navigate = useNavigate();
   useEffect(() => {
-    const hasLogin = Boolean(localStorage.getItem('reservation-user-token'));
+    const hasLogin = Boolean(localStorage.getItem('messaging-user-token'));
     if (!hasLogin) {
       navigate('/login', { replace: true });
     }

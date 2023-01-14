@@ -36,8 +36,8 @@ function LoginForm() {
     if (result.data) {
       const token = result.data.login.accessToken;
       const { roles } = result.data.login;
-      localStorage.setItem('reservation-user-token', token);
-      navigate(roles.includes('Admin') ? '/createEmployee' : '/reservations', { replace: true });
+      localStorage.setItem('messaging-user-token', token);
+      navigate(roles.includes('Admin') ? '/register' : '/chats', { replace: true });
     }
   }, [result.data]) // eslint-disable-line
 
